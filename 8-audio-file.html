@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Image File</title>
+    <style>
+        textarea {
+            width: 300px;
+            height: 100px;
+        }
+        audio {display: block;}
+    </style>
+</head>
+<body>
+    <input type="file" onchange="loadAudio(event)" accept="audio/*">
+    <audio id="audio"></audio>
+    <div id="info"></div>
+
+
+    <script>
+        window.URL = window.URL || window.webkitURL;
+        let audioElement = null;
+        window.addEventListener('load', function() {
+            audioElement = document.getElementById('audio');
+        })
+
+        function loadAudio(event) {
+            let file = event.target.files[0];
+            // Info
+            let info = document.getElementById('info');
+            info.innerHTML = ""
+
+            // Remove old audio element
+            audioElement.remove();
+
+            // Create new audio element
+            audioElement = document.createElement('audio')
+            audioElement.controls = true;
+            // audioElement.playbackRate = 2.0 // (speed)
+
+            // Source Element
+            let source = document.createElement('source')
+            source.src = URL.createObjectURL(file)
+            source.type = file.type
+
+            // Get Audio Duration
+            audioElement.addEventListener('loadeddata', function(event) {
+                info.innerHTML = `<div>Duration: ${this.duration.toFixed(1)} seconds </div>`
+            })
+
+            // Add to HTML
+            audioElement.appendChild(source);
+            document.body.appendChild(audioElement)
+
+        }
+
+    </script>
+</body>
+</html>

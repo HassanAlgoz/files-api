@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Single File</title>
+</head>
+<body>
+    <input type="file" id="fileInput" onchange="getFileInfo(event)">
+    <div id="info"></div>
+
+    <script>
+        function getFileInfo(event) {
+            let file = event.target.files[0];
+            document.getElementById('info').innerHTML = `
+                <ul>
+                    <li>Filename: ${file.name}</li>
+                    <li>Type: ${file.size}</li>
+                    <li>Size: ${file.type}</li>
+                </ul>
+            `;
+        }
+    </script>
+</body>
+</html>

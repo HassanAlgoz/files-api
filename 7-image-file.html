@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Image File</title>
+    <style>
+        img {
+            display: inline-block;
+            max-width: 300px;
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+    <h5>Select multiple files</h5>
+    <input type="file" onchange="displayImages(event)" multiple accept="image/*">
+    <div id="info"></div>
+
+    <script>
+        window.URL = window.URL || window.webkitURL;
+        function displayImages(event) {
+            let files = event.target.files;
+            let info = document.getElementById('info')
+            info.innerHTML = ""
+            for(let i = 0; i < files.length; i++) {
+                let src = URL.createObjectURL(files[i])
+                console.log(src)
+                info.innerHTML += `<img src="${src}">`
+            }
+        }
+    </script>
+</body>
+</html>

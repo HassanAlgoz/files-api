@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Text File</title>
+    <style>
+        textarea {
+            width: 300px;
+            height: 100px;
+        }
+    </style>
+</head>
+<body>
+    <h5>Select a Text File</h5>
+    <input type="file" onchange="loadText(event)">
+    <textarea id="myText"></textarea>
+
+    <script>
+        function loadText(event) {
+            let file = event.target.files[0];
+
+            // Read file content as text
+            let reader = new FileReader()
+            reader.readAsText(file)
+
+            reader.addEventListener('load', function(event) {
+                let text = event.target.result;
+                document.getElementById('myText').value = text;
+            })
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Filter Multiple Files</title>
+</head>
+<body>
+    <input type="file" onchange="getFilesInfo(this)" multiple>
+    <div id="info"></div>
+
+    <!-- Script -->
+    <script>
+        function getFilesInfo(element) {
+            document.getElementById('info').innerHTML = "";
+            
+            let files = element.files;
+            for(let i = 0; i < files.length; i++) {
+                document.getElementById('info').innerHTML += `
+                <ul>
+                    <li>Filename: ${files[i].name}</li>
+                    <li>Size: ${getSizePostfix(files[i].size)}</li>
+                    <li>Type: ${files[i].type}</li>
+                </ul>
+            `
+            }
+
+            let filteredList = Array.from(files).filter((file) => file.size <= 1000000);
+            console.log(filteredList)
+
+
+        }
+
+
+
+
+        function getSizePostfix(size) {
+            // input size is in bytes
+            let postfix = "Bytes"
+
+            // 1 billion bytes = 1GB
+            if (size >= 1000000000) {
+                postfix = "GB"
+                size = (size / 1000000000).toFixed(2)
+            }
+
+            // 1 million bytes = 1MB
+            else if (size >= 1000000) {
+                postfix = "MB"
+                size = (size / 1000000).toFixed(2)
+            }
+
+            // 1000 bytes = 1KB
+            else if (size >= 1000) {
+                postfix = "KB"
+                size = (size / 1000).toFixed(1)
+            }
+
+            return `${size} ${postfix}`
+        }
+    </script>
+</body>
+
+</html>

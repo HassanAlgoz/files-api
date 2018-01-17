@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Text File</title>
+    <style>
+        textarea {
+            width: 300px;
+            height: 200px;
+        }
+    </style>
+</head>
+<body>
+    <textarea id="myText"></textarea>
+    <div>
+        <button id="saveButton" onclick="saveText(event)">Save</button>
+    </div>
+
+    <script>
+        window.URL = window.URL || window.webkitURL;
+        function saveText(event) {
+            let text = document.getElementById('myText').value;
+            save(text, "saved.txt")
+        }
+
+        // Ctrl + S: Saves (and downloads) the file as text
+        document.addEventListener('keydown', function(event) {
+            if (event.keyCode == 83 /*S*/ && (event.ctrlKey || event.metaKey)) {
+                saveText(event);
+                // Prevent default behavior
+                event.preventDefault();
+                return false;
+            }
+        })
+
+        function save(data, filename) {
+            let blob = new Blob([data], { type: 'text/plain' })
+            if (window.saveAs) {
+                window.saveAs(blob, filename)
+            } else if (navigator.saveBlob) {
+                navigator.saveBlob(blob, filename);
+            } else {
+                // Don't worry about this
+                let url = window.URL.createObjectURL(blob);
+                let link = document.createElement("a");
+                link.setAttribute("href", url);
+                link.setAttribute("download", filename);
+                let event = document.createEvent('MouseEvents');
+                event.initMouseEvent('click', true, true, window, 1, 0, 0, 0, 0, false, false, false, false, 0, null);
+                link.dispatchEvent(event);
+            }
+        }
+
+    </script>
+</body>
+
+</html>

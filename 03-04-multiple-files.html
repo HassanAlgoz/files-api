@@ -31,22 +31,22 @@
             // input size is in bytes
             let postfix = "Bytes"
 
-            // 1 billion bytes = 1GB
-            if (size >= 1000000000) {
+            // '<<' is the binary shiftLeft operator
+            let KB = 1 << 10; // same as 2 ** 10 same as Math.pow(2, 10)
+            let MB = 1 << 20; // same as 2 ** 20 same as Math.pow(2, 20)
+            let GB = 1 << 30; // same as 2 ** 30 same as Math.pow(2, 30)
+
+            if (size >= GB) {
                 postfix = "GB"
-                size = (size / 1000000000).toFixed(2)
-            }
+                size = (size / GB).toFixed(2)
 
-            // 1 million bytes = 1MB
-            else if (size >= 1000000) {
+            } else if (size >= MB) {
                 postfix = "MB"
-                size = (size / 1000000).toFixed(2)
-            }
+                size = (size / MB).toFixed(1)
 
-            // 1000 bytes = 1KB
-            else if (size >= 1000) {
+            } else if (size >= KB) {
                 postfix = "KB"
-                size = (size / 1000).toFixed(1)
+                size = Math.ceil(size / KB)
             }
 
             return `${size} ${postfix}`
